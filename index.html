@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Pizarra distribuida</title>
+<script src="https://cdn.jsdelivr.net/npm/socket.io-
+client@4/socket.io.min.js"></script>
+<script>
+const socket = io('/draw');
+const drawio = new Drawio({
+container: '#drawio-container',
+initialXml: '',
+});
+socket.on('draw', (data) => {
+drawio.loadXml(data);
+});
+drawio.on('xml', (xml) => {
+socket.emit('draw', xml);
+});
+</script>
+</head>
+<body>
+<div id="drawio-container"></div>
+</body>
+</html>
